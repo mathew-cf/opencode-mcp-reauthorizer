@@ -6,7 +6,7 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mathew-cf/opencode-mcp-reauthorizer"
+    "url": "https://github.com/mathew-cf/opencode-mcp-auto-reauth"
   },
   "type": "module",
   "main": "dist/index.js",
