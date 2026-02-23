@@ -1,6 +1,6 @@
 {
   "name": "@mathew-cf/opencode-mcp-auto-reauth",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "OpenCode plugin that automatically re-authenticates expired MCP OAuth tokens at startup",
   "author": "mat",
   "license": "Apache-2.0",
