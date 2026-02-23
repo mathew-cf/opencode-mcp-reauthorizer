@@ -20,19 +20,13 @@ A 30-second buffer is applied before expiry to avoid racing with startup.
 
 ## Install
 
-```bash
-npm install @mathew-cf/opencode-mcp-auto-reauth
-```
-
-Then add it to your OpenCode config (`opencode.json` or `opencode.jsonc`):
+Add it to your OpenCode config (`opencode.json` or `opencode.jsonc`):
 
 ```jsonc
 {
-  "plugins": {
-    "mcp-auto-reauth": {
-      "package": "@mathew-cf/opencode-mcp-auto-reauth"
-    }
-  }
+  "plugin": [
+    "@mathew-cf/opencode-mcp-auto-reauth"
+  ]
 }
 ```
 
