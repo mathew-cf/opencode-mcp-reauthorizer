@@ -1,0 +1,37 @@
+{
+  "name": "@mathew-cf/opencode-mcp-auto-reauth",
+  "version": "0.1.0",
+  "description": "OpenCode plugin that automatically re-authenticates expired MCP OAuth tokens at startup",
+  "author": "mat",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mathew-cf/opencode-mcp-reauthorizer"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "bun build src/index.ts --outdir dist --target node",
+    "prepublishOnly": "bun run build",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "opencode",
+    "opencode-plugin",
+    "mcp",
+    "oauth",
+    "auto-reauth"
+  ],
+  "devDependencies": {
+    "@opencode-ai/plugin": "^1.0.224",
+    "@types/node": "^22.0.0",
+    "typescript": "^5.0.0"
+  },
+  "peerDependencies": {
+    "@opencode-ai/plugin": ">=1.0.0"
+  }
+}
