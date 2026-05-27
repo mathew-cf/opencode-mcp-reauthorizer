@@ -60,6 +60,12 @@ OPENCODE_MCP_AUTO_REAUTH=0 opencode
 
 The plugin also reads OpenCode config from the current project (`opencode.json(c)` and `.opencode/opencode.json(c)`) plus the global config directory to find a remote server URL if the auth entry does not already include `serverUrl`.
 
+## Known issue: stale `/mcps` status
+
+After the plugin completes interactive auth, it connects the MCP server in the current OpenCode backend session and shows a success toast. The `/mcps` dialog can still show stale `needs_auth` / `Disabled` status until the TUI refreshes its MCP sync state.
+
+This is a display issue: the tools can be available even while the dialog is stale. Pressing `space` on the stale row, reopening/restarting OpenCode, or any future OpenCode-side MCP status refresh event will update the dialog.
+
 ## Logs
 
 Activity is logged to `mcp-auto-reauth.log` in the same data directory:

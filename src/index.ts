@@ -511,10 +511,19 @@ async function authenticateInBackground(
     }
 
     const status = result.data?.status ?? "unknown";
-    log(`${LOG_PREFIX} ${name}: interactive authentication finished — ${status}`);
+    const statusError = result.data && "error" in result.data ? result.data.error : undefined;
+    log(
+      `${LOG_PREFIX} ${name}: interactive authentication finished — ${status}${statusError ? ` — ${statusError}` : ""}`,
+    );
 
     if (status === "connected") {
       await connectMcp(client, directory, name);
+    } else {
+      await showToast(client, directory, {
+        title: "MCP auth failed",
+        message: `${name} authentication did not complete${statusError ? `: ${statusError}` : "."}`,
+        variant: "warning",
+      });
     }
   } catch (err) {
     log(`${LOG_PREFIX} ${name}: interactive authentication failed — ${errorMessage(err)}`);
@@ -536,8 +545,37 @@ async function connectMcp(client: OpencodeClient, directory: string, name: strin
     }
 
     log(`${LOG_PREFIX} ${name}: connected after auth`);
+    await showToast(client, directory, {
+      title: "MCP connected",
+      message: `${name} authenticated and connected. /mcps may show stale status until refreshed.`,
+      variant: "success",
+    });
   } catch (err) {
-    log(`${LOG_PREFIX} ${name}: connect after auth failed — ${errorMessage(err)}`);
+    const message = errorMessage(err);
+    log(`${LOG_PREFIX} ${name}: connect after auth failed — ${message}`);
+    await showToast(client, directory, {
+      title: "MCP connect failed",
+      message: `${name} authenticated but failed to connect: ${message}`,
+      variant: "warning",
+    });
+  }
+}
+
+async function showToast(
+  client: OpencodeClient,
+  directory: string,
+  toast: { title: string; message: string; variant: "info" | "success" | "warning" | "error" },
+): Promise<void> {
+  try {
+    await client.tui.showToast({
+      body: {
+        ...toast,
+        duration: 5000,
+      },
+      query: { directory },
+    });
+  } catch (err) {
+    log(`${LOG_PREFIX} toast failed — ${errorMessage(err)}`);
   }
 }
 
